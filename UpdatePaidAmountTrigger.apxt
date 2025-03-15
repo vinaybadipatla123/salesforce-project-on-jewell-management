@@ -1,0 +1,7 @@
+trigger UpdatePaidAmountTrigger on Billing__c (before insert, before update) {
+    if (Trigger.isInsert) {
+        UpdatePaidAmountTriggerHandler.handleBeforeInsert(Trigger.new);
+    } else if (Trigger.isUpdate) {
+        UpdatePaidAmountTriggerHandler.handleBeforeUpdate(Trigger.oldMap, Trigger.new);
+    }
+}
