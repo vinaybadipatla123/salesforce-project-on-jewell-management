@@ -1,1 +1,14 @@
-
+public class UpdatePaidAmountTriggerHandler {
+	public static void handleBeforeInsert(List<Billing__c> newBillings) {
+        for (Billing__c billing : newBillings) {
+            billing.Paid_Amount__c = billing.Paying_Amount__c;
+        }
+    }
+    public static void handleBeforeUpdate(Map<Id, Billing__c> oldBillingsMap, List<Billing__c> updatedBillings) {
+        for (Billing__c billing : updatedBillings) {
+            Billing__c oldBilling = oldBillingsMap.get(billing.Id);
+            Decimal oldPaidAmount = oldBilling.Paid_Amount__c;
+            billing.Paid_Amount__c = oldPaidAmount + billing.Paying_Amount__c;
+        }
+    }
+}
